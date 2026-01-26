@@ -25,13 +25,31 @@ function App() {
     setTodoList(todoList.filter(t => t.id !== id));
   }
   
+  const checkTodo = (id) => {
+     const newTodoList = todoList.map( todo => {
+      
+      if(todo.id === id){   
+        return {...todo, done: !todo.done};
+      }else {
+        return todo;
+      }  
+    }
+  )
+
+    setTodoList(newTodoList);
+};
+    
   return (
     <>
       <Header />
       <main className='container'>
         <h1>Gestionnaire de tâches</h1>
         <AddTodo addTodo={ addTodo } />
-        <TodoList todoList = { todoList } deleteTodo = { deleteTodo } />
+        <TodoList 
+          todoList = { todoList } 
+          deleteTodo = { deleteTodo } 
+          checkTodo = { checkTodo }
+        />
       </main>
       <Footer />
     </>

@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem"
 
-export default function TodoList({todoList, deleteTodo}){
+export default function TodoList({todoList, deleteTodo, checkTodo}){
     // console.log(todoList);
 
     // Gérer le cas où il n'y a pas de tdo
@@ -17,6 +17,7 @@ export default function TodoList({todoList, deleteTodo}){
                                 key={ todo.id } 
                                 todo = { todo } 
                                 deleteTodo = { deleteTodo} 
+                                checkTodo={ checkTodo }
                             />
                 }) }
             </ul>

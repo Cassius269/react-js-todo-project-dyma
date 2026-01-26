@@ -17,7 +17,7 @@ export default function AddTodo({addTodo}) {
     const handleInput = (e) => {
         const inputValue = e.target.value;
         setValue(inputValue);
-        console.log("valeur de la state value", value);
+        console.log("valeur de la state value", inputValue);
     }
 
     return (
@@ -26,7 +26,7 @@ export default function AddTodo({addTodo}) {
             <form onSubmit={handleSubmit} action="#" method="POST" className={`d-flex justify-content-around flex-wrap flex-md-nowrap justify-content-md-between bg-primary-subtle p-5 rounded-2 m-auto  ${styles.todoForm}`} >
                     <input onInput={handleInput} 
                             className="form-control mb-3 p-2" 
-                            type="search" name="task" id="task" 
+                            type="text" name="task" id="task" 
                             value={value}
                             placeholder='Ajouter une nouvelle tâche' 
                     />
