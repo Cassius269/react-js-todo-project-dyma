@@ -10,6 +10,7 @@ import { useState } from 'react';
 function App() {
   const [todoList, setTodoList] = useState([]);
 
+  // Méthode d'ajout de nouveau todo
   const addTodo = (content) => {
     const todo = {
       id: crypto.randomUUID(), // généré un ID unique
@@ -21,11 +22,13 @@ function App() {
     setTodoList([...todoList, todo]); // Récupérer les todos, et rajouter la tâche récente
   }
 
+  // Méthode de suppression de todo
   const deleteTodo = (id) => {
     setTodoList(todoList.filter(t => t.id !== id));
   }
   
-  const checkTodo = (id) => {
+  // Méthode de changement d'état de todo
+  const toggleTodo = (id) => {
      const newTodoList = todoList.map( todo => {
       
       if(todo.id === id){   
@@ -48,7 +51,7 @@ function App() {
         <TodoList 
           todoList = { todoList } 
           deleteTodo = { deleteTodo } 
-          checkTodo = { checkTodo }
+          toggleTodo = { toggleTodo }
         />
       </main>
       <Footer />
