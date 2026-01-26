@@ -38,10 +38,27 @@ function App() {
       }  
     }
   )
+    setTodoList(newTodoList);
+  }
 
+  // Méthode de changement d'état de todo
+  const toggleEditTodo = (id) => {
+     const newTodoList = todoList.map( todo => {
+      if(todo.id === id){   
+        return {...todo, editable: !todo.editable};
+      }else {
+        return todo;
+      }  
+    }
+  )
     setTodoList(newTodoList);
 };
     
+  // Méthode de mise à jour de todo
+  const updateTodo = (id, content) => {
+    setTodoList(todoList.map(todo => todo.id == id ? ({...todo, content: content }) : todo));
+  }
+
   return (
     <>
       <Header />
@@ -52,6 +69,8 @@ function App() {
           todoList = { todoList } 
           deleteTodo = { deleteTodo } 
           toggleTodo = { toggleTodo }
+          toggleEditTodo = { toggleEditTodo}
+          updateTodo = { updateTodo }
         />
       </main>
       <Footer />
