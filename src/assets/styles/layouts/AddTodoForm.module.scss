@@ -1,0 +1,18 @@
+.todoForm {
+  container-type: inline-size;
+  
+  button[type='submit'] {
+    background-color: #198754;
+    
+    // Le container Query s'applique sur la largeur du bouton submit en fonction de la taille de la balise parente <form>
+    @container (width > 500px) {
+      max-width: 200px;
+    }
+  }
+
+  // Le media query peut s'applique sur la taille de la balise <form> et son espacement
+  @media screen and (width > 998px) {
+    width: 700px;
+    gap: 1rem;
+  }
+}
