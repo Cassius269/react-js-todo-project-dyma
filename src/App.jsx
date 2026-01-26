@@ -12,7 +12,7 @@ function App() {
 
   const addTodo = (content) => {
     const todo = {
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID(), // généré un ID unique
       content, 
       done: false,
       editable: false
@@ -20,13 +20,18 @@ function App() {
 
     setTodoList([...todoList, todo]); // Récupérer les todos, et rajouter la tâche récente
   }
+
+  const deleteTodo = (id) => {
+    setTodoList(todoList.filter(t => t.id !== id));
+  }
+  
   return (
     <>
       <Header />
       <main className='container'>
         <h1>Gestionnaire de tâches</h1>
         <AddTodo addTodo={ addTodo } />
-        <TodoList />
+        <TodoList todoList = { todoList } deleteTodo = { deleteTodo } />
       </main>
       <Footer />
     </>

@@ -13,9 +13,12 @@ html {
 
 body {
   font-family: variables.$font_familiy;
-  h1{
-    text-align: center;
-    margin-top: 3rem;
+
+  main {
+    h1{
+      text-align: center;
+      margin-top: 3rem;
+    }
   }
 }
 

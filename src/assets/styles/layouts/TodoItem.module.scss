@@ -1,0 +1,18 @@
+@use '../utils//variables' as *;
+
+ul {
+  li {
+      &:hover {
+        p {
+          background-color: $secondary;
+          color: white;
+        }  
+      }
+
+      .trashIcon {
+          border: 2px solid rgb(221, 84, 84);
+          height: 30px;
+          margin-top: 0.3rem;
+      }
+  }
+}

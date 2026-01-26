@@ -5,7 +5,7 @@ import styles from '../assets/styles/layouts/AddTodoForm.module.scss';
 export default function AddTodo({addTodo}) {
     const [value, setValue] =useState('');
 
-    console.log(addTodo)
+    // console.log(addTodo)
     const handleSubmit = (e) => {
         e.preventDefault(); // Désactiver le comportement par défaut de rechargement de page 
         console.log(e.target);
