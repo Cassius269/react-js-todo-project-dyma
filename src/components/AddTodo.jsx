@@ -9,8 +9,9 @@ export default function AddTodo({addTodo}) {
     const handleSubmit = (e) => {
         e.preventDefault(); // Désactiver le comportement par défaut de rechargement de page 
         console.log(e.target);
-        if(value.length){
-            addTodo(value);
+        if(value.length > 0 && value.trim() !== ''){
+            addTodo(value.trim());
+            setValue('');
         }
     }
 

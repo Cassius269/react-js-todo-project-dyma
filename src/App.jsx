@@ -8,7 +8,8 @@ import { useState } from 'react';
 
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
+  // Déclaration de l'état des todos
+  const [todoList, setTodoList] = useState([]); //  valeur initial tableau vide
 
   // Méthode d'ajout de nouveau todo
   const addTodo = (content) => {
@@ -19,7 +20,7 @@ function App() {
       editable: false
     };
 
-    setTodoList([...todoList, todo]); // Récupérer les todos, et rajouter la tâche récente
+    setTodoList([...todoList, todo]); // Récupérer les anciens todos, et rajouter la tâche récente
   }
 
   // Méthode de suppression de todo
@@ -41,7 +42,7 @@ function App() {
     setTodoList(newTodoList);
   }
 
-  // Méthode de changement d'état de todo
+  // Méthode de changement d'état du mode d'édition de todo
   const toggleEditTodo = (id) => {
      const newTodoList = todoList.map( todo => {
       if(todo.id === id){   
@@ -56,7 +57,19 @@ function App() {
     
   // Méthode de mise à jour de todo
   const updateTodo = (id, content) => {
-    setTodoList(todoList.map(todo => todo.id == id ? ({...todo, content: content }) : todo));
+    setTodoList(todoList.map(todo => todo.id === id 
+                  ? 
+                  (
+                    {
+                      ...todo, 
+                      editable : false, // à chaque mise à jour de todo, basculer en mode lecture de todo
+                      content: content 
+                    }
+                  ) 
+                  : 
+                  todo
+                )
+              );
   }
 
   return (
