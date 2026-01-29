@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from '../assets/styles/layouts/AddTodoForm.module.scss';
+import { ThemeContext } from '../App';
 
 
 export default function AddTodo({addTodo}) {
+    const theme = useContext(ThemeContext); // récuperer le contexte du thème
+    console.log("theme dans add", theme);
+
     const [value, setValue] =useState('');
 
     // console.log(addTodo)
@@ -32,7 +36,7 @@ export default function AddTodo({addTodo}) {
                             placeholder='Ajouter une nouvelle tâche' 
                     />
                     <button 
-                        className="btn btn-secondary text-white form-control" 
+                        className={`btn  text-white form-control ${theme ==='green' ? "btn-secondary" : "bg-danger"}`}
                         type="submit">
                             Ajouter une nouvelle tâche
                     </button>

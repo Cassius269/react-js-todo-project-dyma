@@ -4,10 +4,16 @@ import Footer from './components/Footer';
 import './assets/styles/App.scss';
 import AddTodo from './components/AddTodo';
 import TodoList from './components/TodoList';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
+import Theme from './components/Theme';
+
+export const ThemeContext = createContext('green');
 
 
 function App() {
+  // Déclaration de l'état du thème
+  const [theme, setTheme] = useState('green');
+
   // Déclaration de l'état des todos
   const [todoList, setTodoList] = useState([]); //  valeur initial tableau vide
 
@@ -72,12 +78,21 @@ function App() {
               );
   }
 
+  // Méthode pour changer de thème
+  const changeTheme = (t) => {
+    setTheme(t);
+    console.log("theme",theme);
+  }
+
   return (
     <>
       <Header />
       <main className='container'>
         <h1>Gestionnaire de tâches</h1>
-        <AddTodo addTodo={ addTodo } />
+        <Theme changeTheme={changeTheme} />
+        <ThemeContext value={theme}>
+          <AddTodo addTodo={ addTodo } />
+        </ThemeContext>
         <TodoList 
           todoList = { todoList } 
           deleteTodo = { deleteTodo } 
