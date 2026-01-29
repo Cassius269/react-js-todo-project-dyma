@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import styles from '../assets/styles/layouts/AddTodoForm.module.scss';
-import { ThemeContext } from '../App';
+import { ThemeContext } from '../context/ThemeContext';
 
 
 export default function AddTodo({addTodo}) {

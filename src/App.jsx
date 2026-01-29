@@ -4,10 +4,10 @@ import Footer from './components/Footer';
 import './assets/styles/App.scss';
 import AddTodo from './components/AddTodo';
 import TodoList from './components/TodoList';
-import { createContext, useState } from 'react';
+import { useState } from 'react';
+import { ThemeContext } from './context/ThemeContext';
 import Theme from './components/Theme';
 
-export const ThemeContext = createContext('green');
 
 
 function App() {
@@ -85,14 +85,13 @@ function App() {
   }
 
   return (
-    <>
+    <ThemeContext value={theme}>
+
       <Header />
       <main className='container'>
         <h1>Gestionnaire de tâches</h1>
         <Theme changeTheme={changeTheme} />
-        <ThemeContext value={theme}>
           <AddTodo addTodo={ addTodo } />
-        </ThemeContext>
         <TodoList 
           todoList = { todoList } 
           deleteTodo = { deleteTodo } 
@@ -102,7 +101,7 @@ function App() {
         />
       </main>
       <Footer />
-    </>
+    </ThemeContext>
   )
 }
 
