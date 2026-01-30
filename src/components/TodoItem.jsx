@@ -1,20 +1,19 @@
 import styles from  '../assets/styles/layouts/TodoItem.module.scss';
 
-export default function TodoItem({ todo, deleteTodo, toggleTodo, toggleEditTodo }) {
-    // console.log(deleteTodo);
+export default function TodoItem({ todo, deleteTodo, toggleEditTodo, toggleTodo }) {
 
     const handleClickDelete = () => {
         deleteTodo(todo.id);
     }
 
     const handleClickValidate = () => {
-        // console.log('bouton valider cliqué');
+        console.log('bouton valider cliqué');
         toggleTodo(todo.id);
     }
 
  
     const handleClickEdit = () => {
-        // console.log('bouton editer cliqué');
+        console.log('bouton editer cliqué');
         toggleEditTodo(todo.id);
     }
 

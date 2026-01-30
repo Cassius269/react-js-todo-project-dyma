@@ -30,7 +30,7 @@ function EditTodo({ todo, updateTodo, toggleEditTodo }) {
 
     return (
         <form onSubmit={handleSubmit} action="#" method="POST" className="d-flex justify-content-between w-50">
-            <input onKeyDown = { handleKeyDown } onInput={handleInputContentTodo} type="text" value={value} className="form-control w-50" />
+            <input onKeyDown = { handleKeyDown } onInput={handleInputContentTodo} type="text" value={value} className="" />
             <div className="d-flex gap-2">
                 <button onClick={handleClickCancel} type="button" className="btn btn-danger">Annuler</button>
                 <input type="submit" className="btn btn-success form-control" value="Sauvegarder" />
