@@ -18,7 +18,7 @@ export default function TodoItem({ todo, deleteTodo, toggleEditTodo, toggleTodoD
     }
 
     return (   // markup de chaque item
-        <li className="d-flex justify-content-between w-50 fs-4">
+        <li className="d-flex justify-content-between align-items-end w-50 fs-5">
             <p className={`px-2 ${todo.done ? 'text-decoration-line-through' :''}`}>{todo.content}</p>
             <div className="d-flex gap-2">
                 <i onClick={handleClickValidate} role="button" className={`bi bi-${todo.done ? 'check-' :''}square fs-2 text-secondary`}></i>

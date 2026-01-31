@@ -27,7 +27,7 @@ export default function AddTodo({addTodo}) {
 
     return (
         <>
-            <h2 className={`my-4 text-center bg-primary-subtle py-3`}>Créer une nouvelle tâche</h2>
+            <h2 className={`my-4 text-center py-3`}>Créer une nouvelle tâche</h2>
             <form onSubmit={handleSubmit} action="#" method="POST" className={`d-flex justify-content-around flex-wrap flex-md-nowrap justify-content-md-between bg-primary-subtle p-5 rounded-2 m-auto  ${styles.todoForm}`} >
                     <input onInput={handleInput} 
                             className="form-control mb-3 p-2" 

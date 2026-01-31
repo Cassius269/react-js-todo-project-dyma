@@ -16,10 +16,9 @@ export default function Theme({changeTheme}){
     }
 
     return (
-        <section className="d-flex justify-content-end align-items-end flex-column">
-            <h3>Le thème</h3>
-            <form onSubmit={ handleSubmit } onChange={handleChange} action="#" method="POST" className="d-flex flex-column">
-                <label htmlFor="theme" className="form-label">Thème du bouton Ajouter</label>
+        <section className="d-flex justify-content-end ">
+            <form onSubmit={ handleSubmit } onChange={handleChange} action="#" method="POST" className="d-flex gap-2 flex-column w-25">
+                <label htmlFor="theme" className="form-label text-secondary">Thème du bouton Ajouter</label>
                 <select name="theme" id="theme" className="form-select">
                     <option value="">--Veuillez choisir un thème--</option>
                     <option value="green">vert</option>
