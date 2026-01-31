@@ -1,6 +1,6 @@
 import styles from  '../assets/styles/layouts/TodoItem.module.scss';
 
-export default function TodoItem({ todo, deleteTodo, toggleEditTodo, toggleTodo }) {
+export default function TodoItem({ todo, deleteTodo, toggleEditTodo, toggleTodoDone }) {
 
     const handleClickDelete = () => {
         deleteTodo(todo.id);
@@ -8,7 +8,7 @@ export default function TodoItem({ todo, deleteTodo, toggleEditTodo, toggleTodo 
 
     const handleClickValidate = () => {
         console.log('bouton valider cliqué');
-        toggleTodo(todo.id);
+        toggleTodoDone(todo.id);
     }
 
  

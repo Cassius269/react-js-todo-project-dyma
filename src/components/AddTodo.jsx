@@ -14,7 +14,7 @@ export default function AddTodo({addTodo}) {
         e.preventDefault(); // Désactiver le comportement par défaut de rechargement de page 
         console.log(e.target);
         if(value.length > 0 && value.trim() !== ''){
-            addTodo(value.trim());
+            addTodo(value.trim()); // ajouter la todo à la liste des todo en renseignant sa valeur
             setValue('');
         }
     }

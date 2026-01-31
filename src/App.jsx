@@ -45,11 +45,11 @@ function App() {
     );
   }
   
-  // Méthode de changement d'état de todo
-  const toggleTodo = (id) => {
+  // Méthode de changement d'état de validation de todo
+  const toggleTodoDone = (id) => {
     dispatch(
       {
-        type: 'TOGGLE_TODO',
+        type: 'TOGGLE_DONE_TODO',
         id
       }
     )
@@ -90,7 +90,7 @@ function App() {
         <TodoList 
           todoList = { state.todoList } 
           deleteTodo = { deleteTodo } 
-          toggleTodo = { toggleTodo }
+          toggleTodoDone = { toggleTodoDone }
           toggleEditTodo = { toggleEditTodo}
           updateTodo = { updateTodo }
         />

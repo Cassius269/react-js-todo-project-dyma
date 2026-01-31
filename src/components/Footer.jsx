@@ -5,7 +5,7 @@ export default function Footer(){
 
     return (
         <footer className='container-fluid text-white bg-dark'>
-            <p>Droits d'auteur @{date.getFullYear()} Cookchef</p>
+            <p>Droits d'auteur @{date.getFullYear()} TodoGestionnaire</p>
         </footer>
     );
 }
