@@ -36,7 +36,7 @@ function todoReducer(state, action){
             console.log('todo mise à jour');
             return {
                 ...state, 
-                todolist: state.todoList.map(todo => todo.id === action.id ? {...todo, content: action.content} : todo )
+                todoList: state.todoList.map(todo => todo.id === action.id ? {...todo, content: action.content} : todo )
             };
         default : {
             throw new Error('action inconnue');

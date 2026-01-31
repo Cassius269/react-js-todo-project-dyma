@@ -7,6 +7,8 @@ function EditTodo({ todo, updateTodo, toggleEditTodo }) {
         e.preventDefault(); // désactiver le comportement par défaut
         if(value.length) {
             updateTodo(todo.id, value);
+                    toggleEditTodo(todo.id);
+
         }
     }
 
