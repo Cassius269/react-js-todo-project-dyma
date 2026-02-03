@@ -24,7 +24,7 @@ function todoReducer(state, action){
                 todoList: state.todoList.map( todo => todo.id === action.id ? {...todo, done : !todo.done} : todo)
                 };
         case "TOGGLE_EDIT_TODO":
-            console.log('todo en modde édition');
+            console.log('todo en mode édition');
             return {
                 todoList: state.todoList.map( todo => todo.id === action.id ? {...todo, editable : !todo.editable} : todo)
             };  

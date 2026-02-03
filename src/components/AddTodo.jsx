@@ -1,9 +1,12 @@
 import { useContext, useState } from 'react';
 import styles from '../assets/styles/layouts/AddTodoForm.module.scss';
 import { ThemeContext } from '../context/ThemeContext';
+import { TodoDispatcherContext } from '../context/TodoContext';
 
 
-export default function AddTodo({addTodo}) {
+export default function AddTodo() {
+    const dispatch = useContext(TodoDispatcherContext); // Récupérer le dispatcher
+
     const theme = useContext(ThemeContext); // récuperer le contexte du thème
     console.log("theme dans add", theme);
 
@@ -14,7 +17,10 @@ export default function AddTodo({addTodo}) {
         e.preventDefault(); // Désactiver le comportement par défaut de rechargement de page 
         console.log(e.target);
         if(value.length > 0 && value.trim() !== ''){
-            addTodo(value.trim()); // ajouter la todo à la liste des todo en renseignant sa valeur
+            dispatch({
+                type : 'ADD_TODO',
+                content: value.trim()
+            }); // ajouter la todo à la liste des todo en renseignant sa valeur au dispatch ainsi que l'action de l'utilsateur
             setValue('');
         }
     }

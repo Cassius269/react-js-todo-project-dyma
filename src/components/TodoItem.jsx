@@ -1,20 +1,36 @@
+import { useContext } from 'react';
 import styles from  '../assets/styles/layouts/TodoItem.module.scss';
+import { TodoDispatcherContext } from '../context/TodoContext';
 
-export default function TodoItem({ todo, deleteTodo, toggleEditTodo, toggleTodoDone }) {
+export default function TodoItem({ todo }) {
+    const dispatch = useContext(TodoDispatcherContext);
 
     const handleClickDelete = () => {
-        deleteTodo(todo.id);
+        dispatch(
+            {
+                type: 'DELETE_TODO',
+                id : todo.id
+            }
+        );
     }
 
     const handleClickValidate = () => {
         console.log('bouton valider cliqué');
-        toggleTodoDone(todo.id);
+        dispatch({
+                    type: 'TOGGLE_DONE_TODO',
+                    id: todo.id
+        });    
     }
 
  
     const handleClickEdit = () => {
         console.log('bouton editer cliqué');
-        toggleEditTodo(todo.id);
+        dispatch(
+            {
+                type: 'TOGGLE_EDIT_TODO',
+                id : todo.id 
+            }
+            )    
     }
 
     return (   // markup de chaque item

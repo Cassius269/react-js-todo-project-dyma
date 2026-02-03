@@ -1,11 +1,14 @@
+import { useContext } from "react"
 import EditTodo from "./EditTodo"
 import TodoItem from "./TodoItem"
+import { TodoStateContext } from "../context/TodoContext"
 
-export default function TodoList({todoList, deleteTodo, toggleTodoDone, toggleEditTodo, updateTodo}){
-    // console.log(todoList);
+export default function TodoList(){
+    const state = useContext(TodoStateContext);
+    console.log('TodoList state:', state);  // 👈 Debug    
 
     // Gérer le cas où il n'y a pas de todo
-    if(!todoList || todoList.length == 0){
+    if(!state.todoList || state.todoList.length == 0){
         return <p className="text-info">Pas de tâche(s) à faire</p>
     }
 
@@ -13,12 +16,10 @@ export default function TodoList({todoList, deleteTodo, toggleTodoDone, toggleEd
         <>
             <h2 className="mt-4">Les todos</h2>
             <ul>
-                { todoList.map(todo => todo.editable ? (
+                { state.todoList.map(todo => todo.editable ? (
                     <li key={ todo.id }>
                         <EditTodo 
                             todo = {todo} 
-                            updateTodo = { updateTodo}
-                            toggleEditTodo = {toggleEditTodo}
                         />
                     </li>
                     ) 
@@ -26,10 +27,6 @@ export default function TodoList({todoList, deleteTodo, toggleTodoDone, toggleEd
                     (<TodoItem 
                                 key={ todo.id } 
                                 todo = { todo } 
-                                deleteTodo = { deleteTodo} 
-                                toggleTodoDone={ toggleTodoDone }
-                                toggleEditTodo = { toggleEditTodo }
-                                EditTodo = { () => toggleEditTodo(todo.id)}
                     />)
                 ) }
             </ul>
