@@ -6,6 +6,7 @@ function TodoProvider({children}) {
   // Gestion du reducer de todo
   const [state, dispatch] = useReducer(todoReducer, 
     {
+      theme: 'green', // couleur par défaut du bouton "Ajouter une nouvelle tâche"
       todoList: []
     },
   );
