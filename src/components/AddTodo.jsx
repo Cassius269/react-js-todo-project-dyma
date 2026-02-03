@@ -1,14 +1,13 @@
 import { useContext, useState } from 'react';
 import styles from '../assets/styles/layouts/AddTodoForm.module.scss';
-import { ThemeContext } from '../context/ThemeContext';
-import { TodoDispatcherContext } from '../context/TodoContext';
+import { TodoDispatcherContext, TodoStateContext } from '../context/TodoContext';
 
 
 export default function AddTodo() {
     const dispatch = useContext(TodoDispatcherContext); // Récupérer le dispatcher
+    const state = useContext(TodoStateContext);
 
-    const theme = useContext(ThemeContext); // récuperer le contexte du thème
-    console.log("theme dans add", theme);
+    console.log("theme dans add", state.theme);
 
     const [value, setValue] =useState('');
 
@@ -20,6 +19,7 @@ export default function AddTodo() {
             dispatch({
                 type : 'ADD_TODO',
                 content: value.trim()
+
             }); // ajouter la todo à la liste des todo en renseignant sa valeur au dispatch ainsi que l'action de l'utilsateur
             setValue('');
         }
@@ -42,7 +42,7 @@ export default function AddTodo() {
                             placeholder='Ajouter une nouvelle tâche' 
                     />
                     <button 
-                        className={`btn  text-white form-control ${theme ==='green' ? "btn-secondary" : "bg-danger"}`}
+                        className={`btn  text-white form-control ${(state?.theme ?? 'green') === 'red' ? 'bg-danger' : 'btn-primary'}`}
                         type="submit">
                             Ajouter une nouvelle tâche
                     </button>
