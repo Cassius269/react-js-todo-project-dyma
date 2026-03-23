@@ -4,7 +4,7 @@ export default function TodoItem({ todo, deleteTodo, toggleTodo, toggleEditTodo 
     // console.log(deleteTodo);
 
     const handleClickDelete = () => {
-        deleteTodo(todo.id);
+        deleteTodo(todo._id);
     }
 
     const handleClickValidate = () => {
@@ -15,7 +15,7 @@ export default function TodoItem({ todo, deleteTodo, toggleTodo, toggleEditTodo 
  
     const handleClickEdit = () => {
         // console.log('bouton editer cliqué');
-        toggleEditTodo(todo.id);
+        toggleEditTodo(todo._id);
     }
 
     return (   // markup de chaque item

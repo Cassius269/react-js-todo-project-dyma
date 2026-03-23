@@ -23,15 +23,15 @@ function App() {
   }
 
   // Méthode de suppression de todo
-  const deleteTodo = (id) => {
-    setTodoList(todoList.filter(t => t.id !== id));
+  const deleteTodo = (_id) => {
+    setTodoList(todoList.filter(t => t._id !== _id));
   }
   
   // Méthode de changement d'état de todo
-  const toggleTodo = (id) => {
+  const toggleTodo = (_id) => {
      const newTodoList = todoList.map( todo => {
       
-      if(todo.id === id){   
+      if(todo._id === _id){   
         return {...todo, done: !todo.done};
       }else {
         return todo;
@@ -42,9 +42,9 @@ function App() {
   }
 
   // Méthode de changement d'état du mode d'édition de todo
-  const toggleEditTodo = (id) => {
+  const toggleEditTodo = (_id) => {
      const newTodoList = todoList.map( todo => {
-      if(todo.id === id){   
+      if(todo._id === _id){   
         return {...todo, editable: !todo.editable};
       }else {
         return todo;
@@ -55,8 +55,8 @@ function App() {
 };
     
   // Méthode de mise à jour de todo
-  const updateTodo = (id, content) => {
-    setTodoList(todoList.map(todo => todo.id === id 
+  const updateTodo = (_id, content) => {
+    setTodoList(todoList.map(todo => todo.id === _id 
                   ? 
                   (
                     {

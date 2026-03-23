@@ -6,7 +6,7 @@ function EditTodo({ todo, updateTodo, toggleEditTodo }) {
     const handleSubmit = (e) => {
         e.preventDefault(); // désactiver le comportement par défaut
         if(value.length) {
-            updateTodo(todo.id, value);
+            updateTodo(todo._id, value);
         }
     }
 
@@ -18,7 +18,7 @@ function EditTodo({ todo, updateTodo, toggleEditTodo }) {
 
     // Passer en mode lecture
     const handleClickCancel = () => {
-        toggleEditTodo(todo.id);
+        toggleEditTodo(todo._id);
     }
 
     const handleKeyDown = (e) => {

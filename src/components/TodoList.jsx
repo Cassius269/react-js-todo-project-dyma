@@ -15,7 +15,7 @@ export default function TodoList({todoList, deleteTodo, toggleTodo, toggleEditTo
             <ul>
                 { todoList.map(todo => todo.editable ? (
                     <EditTodo 
-                        key={todo.id}
+                        key={todo._id}
                         todo = {todo} 
                         updateTodo = { updateTodo}
                         toggleEditTodo = {toggleEditTodo}
@@ -23,7 +23,7 @@ export default function TodoList({todoList, deleteTodo, toggleTodo, toggleEditTo
                     ) 
                     :
                     (<TodoItem 
-                                key={ todo.id } 
+                                key={ todo._id } 
                                 todo = { todo } 
                                 deleteTodo = { deleteTodo} 
                                 toggleTodo={ toggleTodo }

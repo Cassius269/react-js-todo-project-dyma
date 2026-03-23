@@ -11,29 +11,38 @@ export default function AddTodo({addTodo}) {
     const [value, setValue] =useState('');
 
     // console.log(addTodo)
-    const handleSubmit = (e) => {
+    const  handleSubmit = async (e) => {
         e.preventDefault(); // Désactiver le comportement par défaut de rechargement de page 
         console.log(e.target);
         if(value.length > 0 && value.trim() !== ''){
+            // Préparer la chargeur utile
             const payload = {
                 content : value.trim(),
                 done: false
             };
 
-            fetch('https://jsonplaceholder.typicode.com/todos',{
-                method: 'POST', 
-                body : JSON.stringify(payload), // transformer la charge utile en json stringifié
-                headers: { 
-                    "Content-Type": "application/json"
+            // Envoyer la todo au serveur
+            try{
+                const response = await fetch('https://www.restapi.fr/api/rtodo',{
+                    method: 'POST', 
+                    body : JSON.stringify(payload), // transformer la charge utile en json stringifié
+                    headers: { 
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                // Traiter la réponse si aucune erreur détectée
+                if(response.ok){
+                    const data = await response.json();
+                    console.log(`Todo créé : ${data}`);
+                    addTodo(data); // mettre à jour la liste locale
+                    setValue('');                    
                 }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                addTodo(data);
-                setValue('');
-            })
-            .catch(error => console.error(`error : ${error}`));
+   
+
+            }catch(error){
+                console.error(`error : ${error}`)
+            }
         }
     }
 
