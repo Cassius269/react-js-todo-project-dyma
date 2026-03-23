@@ -5,8 +5,9 @@ import { ThemeContext } from '../context/ThemeContext';
 
 export default function AddTodo({addTodo}) {
     const theme = useContext(ThemeContext); // récuperer le contexte du thème
-    console.log("theme dans add", theme);
+    console.log("theme dans l'app", theme);
 
+    // Déclaration d'un état local pour la valeur de l'input
     const [value, setValue] =useState('');
 
     // console.log(addTodo)
@@ -14,8 +15,25 @@ export default function AddTodo({addTodo}) {
         e.preventDefault(); // Désactiver le comportement par défaut de rechargement de page 
         console.log(e.target);
         if(value.length > 0 && value.trim() !== ''){
-            addTodo(value.trim());
-            setValue('');
+            const payload = {
+                content : value.trim(),
+                done: false
+            };
+
+            fetch('https://jsonplaceholder.typicode.com/todos',{
+                method: 'POST', 
+                body : JSON.stringify(payload), // transformer la charge utile en json stringifié
+                headers: { 
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                addTodo(data);
+                setValue('');
+            })
+            .catch(error => console.error(`error : ${error}`));
         }
     }
 

@@ -18,14 +18,7 @@ function App() {
   const [todoList, setTodoList] = useState([]); //  valeur initial tableau vide
 
   // Méthode d'ajout de nouveau todo
-  const addTodo = (content) => {
-    const todo = {
-      id: crypto.randomUUID(), // généré un ID unique
-      content, 
-      done: false,
-      editable: false
-    };
-
+  const addTodo = (todo) => {
     setTodoList([...todoList, todo]); // Récupérer les anciens todos, et rajouter la tâche récente
   }
 
@@ -91,7 +84,7 @@ function App() {
       <main className='container'>
         <h1>Gestionnaire de tâches</h1>
         <Theme changeTheme={changeTheme} />
-          <AddTodo addTodo={ addTodo } />
+        <AddTodo addTodo={ addTodo } />
         <TodoList 
           todoList = { todoList } 
           deleteTodo = { deleteTodo } 
