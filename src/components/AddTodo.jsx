@@ -41,12 +41,12 @@ export default function AddTodo({addTodo}) {
             }else { // en cas d'erreur, préparer une erreur générique
                 setError('Ooops, une erreur');
                 }
-            }catch(error){
+        }catch(error){
                 console.error(`error : ${error}`);
                 setError('Ooops, une erreur');
-            }finally {
+        }finally {
                 setIsLoading(false); // erreur ou pas erreur, enlever le loading à la fin du fetch
-            }
+        }
     }
     // console.log(addTodo)
     const  handleSubmit = async (e) => {
