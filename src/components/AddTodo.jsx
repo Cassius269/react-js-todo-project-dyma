@@ -7,42 +7,53 @@ export default function AddTodo({addTodo}) {
     const theme = useContext(ThemeContext); // récuperer le contexte du thème
     console.log("theme dans l'app", theme);
 
-    // Déclaration d'un état local pour la valeur de l'input
+    // Déclaration de l'état local du composant (valeur d'input, et état du chargement)
     const [value, setValue] =useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
+
+    // Création d'une fonction asynchrone de création de todo
+    const createTodo = async (content) => {
+        // Préparer la chargeur utile
+        const payload = {
+            content : content.trim(),
+            done: false
+        };
+
+        // Envoyer la todo au serveur
+        try{
+            setIsLoading(true);
+            const response = await fetch('https://www.restapi.fr/api/rtodo',{
+                method: 'POST', 
+                body : JSON.stringify(payload), // transformer la charge utile en json stringifié
+                headers: { 
+                    "Content-Type": "application/json"
+                }
+                });
+
+            // Traiter la réponse si aucune erreur détectée
+            if(response.ok){
+                const data = await response.json();
+                console.log(`Todo créé : ${data}`);
+                addTodo(data); // mettre à jour la liste locale
+                setValue('');                    
+            }else { // en cas d'erreur, préparer une erreur générique
+                setError('Ooops, une erreur');
+                }
+            }catch(error){
+                console.error(`error : ${error}`);
+                setError('Ooops, une erreur');
+            }finally {
+                setIsLoading(false); // erreur ou pas erreur, enlever le loading à la fin du fetch
+            }
+    }
     // console.log(addTodo)
     const  handleSubmit = async (e) => {
         e.preventDefault(); // Désactiver le comportement par défaut de rechargement de page 
         console.log(e.target);
         if(value.length > 0 && value.trim() !== ''){
-            // Préparer la chargeur utile
-            const payload = {
-                content : value.trim(),
-                done: false
-            };
-
-            // Envoyer la todo au serveur
-            try{
-                const response = await fetch('https://www.restapi.fr/api/rtodo',{
-                    method: 'POST', 
-                    body : JSON.stringify(payload), // transformer la charge utile en json stringifié
-                    headers: { 
-                        "Content-Type": "application/json"
-                    }
-                });
-
-                // Traiter la réponse si aucune erreur détectée
-                if(response.ok){
-                    const data = await response.json();
-                    console.log(`Todo créé : ${data}`);
-                    addTodo(data); // mettre à jour la liste locale
-                    setValue('');                    
-                }
-   
-
-            }catch(error){
-                console.error(`error : ${error}`)
-            }
+            createTodo(value);
         }
     }
 
@@ -65,8 +76,9 @@ export default function AddTodo({addTodo}) {
                     <button 
                         className={`btn  text-white form-control ${theme ==='green' ? "btn-secondary" : "bg-danger"}`}
                         type="submit">
-                            Ajouter une nouvelle tâche
+                        {isLoading ? 'chargement en cours' : ' Ajouter une nouvelle tâche'}
                     </button>
+                    {error && <i>{error}</i>}
             </form>
         </>
     );
