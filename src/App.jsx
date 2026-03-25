@@ -52,7 +52,7 @@ function App() {
 
     getTodos(); // appel de la fonction de récupération de todos
 
-    // Ignorer les nouvelles récupérations en
+    // Ignorer les nouvelles récupérations de todo si recupération déjà effectuée
     return () => {
       shouldCancel = true;
     }
