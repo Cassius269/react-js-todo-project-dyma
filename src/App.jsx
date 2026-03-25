@@ -8,8 +8,6 @@ import { useEffect, useState } from 'react';
 import { ThemeContext } from './context/ThemeContext';
 import Theme from './components/Theme';
 
-
-
 function App() {
   // Déclaration de l'état du thème
   const [theme, setTheme] = useState('green');

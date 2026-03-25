@@ -4,12 +4,28 @@ export default function TodoItem({ todo, deleteTodo, toggleTodo, toggleEditTodo 
     // console.log(deleteTodo);
 
     const handleClickDelete = () => {
-        deleteTodo(todo._id);
+        const deleteTodoFromApi = async (id) => {
+            try{
+                const response = await fetch(`https://www.restapi.fr/api/rtodo/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if(response.ok){
+                    const data = await response.json();
+                    console.log(`Message reçu du serveur: ${data}`);
+                }
+            }catch(error) {
+                console.log('erreur', error)
+            }
+        };
+
+        deleteTodoFromApi(todo._id);
+        deleteTodo(todo._id); // supprimer la todo de l'état local du composant parent (le composant racine <App /> )
     }
 
     const handleClickValidate = () => {
         // console.log('bouton valider cliqué');
-        toggleTodo(todo.id);
+        toggleTodo(todo._id);
     }
 
  
