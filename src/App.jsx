@@ -22,23 +22,27 @@ function App() {
 
   // Récupérer les todos
   useEffect( () => { 
+    let shouldCancel = false;
+
     // Créer la fonction de récupération des todos
     const getTodos = async ()=> {
       try {
         setIsLoading(true)
         const response = await fetch('https://www.restapi.fr/api/rtodo');
-        const data = await response.json();
-
-        console.log(data);
           if(response.ok){
-            if(Array.isArray(data)){ // vérifier si les données sont sous forme de tableau
-              setTodoList(data);
-            }else { 
-              setTodoList([data]);
+            const data = await response.json();
+            console.log(data);
+
+            if(!shouldCancel){
+              if(Array.isArray(data)){ // vérifier si les données sont sous forme de tableau
+                setTodoList(data);
+              }else { 
+                setTodoList([data]);
+              }
+            }else {
+              console.log('erreur');
             }
-          }else {
-            console.log('erreur');
-          }
+            }
           } catch (error) {
             console.log('erreur', error);
           }finally {
@@ -48,6 +52,10 @@ function App() {
 
     getTodos(); // appel de la fonction de récupération de todos
 
+    // Ignorer les nouvelles récupérations en
+    return () => {
+      shouldCancel = true;
+    }
   }, []) // charger la liste des todos une seule fois après le premier rendu du composant <App />
 
     // Méthode d'ajout de nouveau todo
