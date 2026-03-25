@@ -4,7 +4,7 @@ import Footer from './components/Footer';
 import './assets/styles/App.scss';
 import AddTodo from './components/AddTodo';
 import TodoList from './components/TodoList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ThemeContext } from './context/ThemeContext';
 import Theme from './components/Theme';
 
@@ -17,7 +17,40 @@ function App() {
   // Déclaration de l'état des todos
   const [todoList, setTodoList] = useState([]); //  valeur initial tableau vide
 
-  // Méthode d'ajout de nouveau todo
+  // Déclaration de l'état du chargement des todos
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Récupérer les todos
+  useEffect( () => { 
+    // Créer la fonction de récupération des todos
+    const getTodos = async ()=> {
+      try {
+        setIsLoading(true)
+        const response = await fetch('https://www.restapi.fr/api/rtodo');
+        const data = await response.json();
+
+        console.log(data);
+          if(response.ok){
+            if(Array.isArray(data)){ // vérifier si les données sont sous forme de tableau
+              setTodoList(data);
+            }else { 
+              setTodoList([data]);
+            }
+          }else {
+            console.log('erreur');
+          }
+          } catch (error) {
+            console.log('erreur', error);
+          }finally {
+            setIsLoading(false);
+          }
+  };
+
+    getTodos(); // appel de la fonction de récupération de todos
+
+  }, []) // charger la liste des todos une seule fois après le premier rendu du composant <App />
+
+    // Méthode d'ajout de nouveau todo
   const addTodo = (todo) => {
     setTodoList([...todoList, todo]); // Récupérer les anciens todos, et rajouter la tâche récente
   }
@@ -85,12 +118,14 @@ function App() {
         <h1>Gestionnaire de tâches</h1>
         <Theme changeTheme={changeTheme} />
         <AddTodo addTodo={ addTodo } />
+        {isLoading && <p>Chargement des todos en cours</p>}
         <TodoList 
           todoList = { todoList } 
           deleteTodo = { deleteTodo } 
           toggleTodo = { toggleTodo }
           toggleEditTodo = { toggleEditTodo}
           updateTodo = { updateTodo }
+          setTodoList = {setTodoList}
         />
       </main>
       <Footer />
