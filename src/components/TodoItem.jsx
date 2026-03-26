@@ -2,35 +2,62 @@ import { useContext } from 'react';
 import styles from  '../assets/styles/layouts/TodoItem.module.scss';
 import { TodoDispatcherContext } from '../context/TodoContext';
 
-export default function TodoItem({ todo }) {
-    const dispatch = useContext(TodoDispatcherContext);
+
+export default function TodoItem({ todo, deleteTodo, updateTodo}) {
+    // console.log(deleteTodo);
+    const updateTodoFromApi = async (todoToUpdate) => {
+        const  {_id, editable, ...payload} = todoToUpdate;
+        
+        try {
+            const response = await fetch(`https://www.restapi.fr/api/todos/${todo._id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(payload),
+                headers : {
+                    'Content-Type': 'application/json'
+                }
+                });
+
+                if(response.ok){
+                    const data = await response.json();
+                    console.log(data);
+
+                    // modifier la todo dans l'état local des todos du composant racine <App />
+                    updateTodo({...todo, done: !todo.done});
+                }
+            } catch (error) {
+                console.log('Erreur', error)
+            }
+        };
+
+    const deleteTodoFromApi = async (id) => {
+        try{
+            const response = await fetch(`https://www.restapi.fr/api/todos/${id}`, {
+                method: 'DELETE'
+            }); 
+
+            if(response.ok){
+                const data = await response.json();
+                console.log(`Message reçu du serveur: ${data}`);
+                deleteTodo(todo._id); // déclencher l'action de suppression de todo présent dans le reducer
+                console.log('Erreur');
+            }
+        }catch(error) {
+                console.log('erreur', error);
+        }
+        };
 
     const handleClickDelete = () => {
-        dispatch(
-            {
-                type: 'DELETE_TODO',
-                id : todo.id
-            }
-        );
+        deleteTodoFromApi(todo._id);
     }
 
     const handleClickValidate = () => {
-        console.log('bouton valider cliqué');
-        dispatch({
-                    type: 'TOGGLE_DONE_TODO',
-                    id: todo.id
-        });    
+        // console.log('bouton valider cliqué');
+        updateTodoFromApi({...todo, done: !todo.done});
     }
 
- 
     const handleClickEdit = () => {
-        console.log('bouton editer cliqué');
-        dispatch(
-            {
-                type: 'TOGGLE_EDIT_TODO',
-                id : todo.id 
-            }
-            )    
+        // console.log('bouton editer cliqué');
+        updateTodo({...todo, editable: true});
     }
 
     return (   // markup de chaque item

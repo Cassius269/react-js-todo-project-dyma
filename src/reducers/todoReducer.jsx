@@ -1,51 +1,35 @@
 function todoReducer(state, action){
-    switch(action.type) {
-        case "ADD_TODO": 
-            console.log('todo ajoutée');
-            console.log(state);
+    switch(action.type){
+        case 'TODO_FETCH': 
+            console.log('Récupérer tous les todos');
             return {
-                ...state,
-                todoList: [...state.todoList, 
-                   { 
-                    id: crypto.randomUUID(),
-                    content: action.content,
-                    editable: false, 
-                    done: false}
-                ]
-            };
-        case "DELETE_TODO":
-            console.log('todo supprimé');
-            console.log(state.todoList)
-            return {
-                ...state,
-                todoList : state.todoList.filter(todo => todo.id !== action.id)
+                // traitement à faire
+                ...state, 
+                todoList: Array.isArray(action.todos)
+                            ? [...state.todoList, ...action.todos]   // plusieurs todos à l'aide de la destructuration de tableau
+                            : [...state.todoList, action.todos]
             }
-        case "TOGGLE_DONE_TODO":
-            console.log('todo validée/non validée');
-            return {
-                ...state,
-                todoList: state.todoList.map( todo => todo.id === action.id ? {...todo, done : !todo.done} : todo)
-                };
-        case "TOGGLE_EDIT_TODO":
-            console.log('todo en mode édition');
-            return {
-                ...state,
-                todoList: state.todoList.map( todo => todo.id === action.id ? {...todo, editable : !todo.editable} : todo)
-            };  
-        case "TOGGLE_UPDATE_TODO":
-            console.log('todo mise à jour');
-            return {
-                ...state,
-                todoList: state.todoList.map(todo => todo.id === action.id ? {...todo, content: action.content, editable : false} : todo )
-            };
-        case "SET_THEME": 
-             console.log('changement de thème')
+        case 'TODO_CREATE': 
+            console.log('Créer un todo');
             return {
                 ...state, 
-                theme: action.theme
-            }
-        default : 
-            throw new Error('action inconnue');  
+                todoList: [...state.todoList, action.todo]   
+            };
+        case 'TODO_UPDATE':
+            console.log('Mettre à jour un todo');
+            return {
+                ...state, 
+                todoList: state.todoList.map(t => t._id === action.todo._id ? action.todo : t) // remplacer la todo précédente ayant ID similaire contre la nouvelle todo
+            };
+        case 'TODO_DELETE':
+            console.log('Supprimer un todo');
+           return {
+                ...state, 
+                todoList: state.todoList.filter(t => t._id !== action._id)
+            };
+        default: {
+            throw new Error('Action inconnue');
+        }
     }
 }
 
