@@ -1,18 +1,42 @@
 import styles from  '../assets/styles/layouts/TodoItem.module.scss';
 
-export default function TodoItem({ todo, deleteTodo, toggleTodo, toggleEditTodo }) {
+export default function TodoItem({ todo, deleteTodo, updateTodo}) {
     // console.log(deleteTodo);
+
+    const updateTodoFromApi = async (todoToUpdate) => {
+        const  {_id, editable, ...payload} = todoToUpdate;
+            
+            try {
+                const response = await fetch(`https://www.restapi.fr/api/todos/${todo._id}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify(payload),
+                    headers : {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if(response.ok){
+                    const data = await response.json();
+
+                    console.log(data);
+                }
+            } catch (error) {
+                console.log('Erreur', error)
+            }
+        };
 
     const handleClickDelete = () => {
         const deleteTodoFromApi = async (id) => {
             try{
-                const response = await fetch(`https://www.restapi.fr/api/rtodo/${id}`, {
+                const response = await fetch(`https://www.restapi.fr/api/todos/${id}`, {
                     method: 'DELETE'
                 });
 
                 if(response.ok){
                     const data = await response.json();
                     console.log(`Message reçu du serveur: ${data}`);
+                }else {
+                    console.log('Erreur')
                 }
             }catch(error) {
                 console.log('erreur', error)
@@ -25,13 +49,15 @@ export default function TodoItem({ todo, deleteTodo, toggleTodo, toggleEditTodo 
 
     const handleClickValidate = () => {
         // console.log('bouton valider cliqué');
-        toggleTodo(todo._id);
+        updateTodo({...todo, done: !todo.done});
+                updateTodoFromApi({...todo, done: !todo.done});
+
     }
 
  
     const handleClickEdit = () => {
         // console.log('bouton editer cliqué');
-        toggleEditTodo(todo._id);
+        updateTodo({...todo, editable: true});
     }
 
     return (   // markup de chaque item

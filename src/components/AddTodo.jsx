@@ -24,7 +24,7 @@ export default function AddTodo({addTodo}) {
         // Envoyer la todo au serveur
         try{
             setIsLoading(true);
-            const response = await fetch('https://www.restapi.fr/api/rtodo',{
+            const response = await fetch('https://www.restapi.fr/api/todos',{
                 method: 'POST', 
                 body : JSON.stringify(payload), // transformer la charge utile en json stringifié
                 headers: { 
@@ -39,7 +39,7 @@ export default function AddTodo({addTodo}) {
                 addTodo(data); // mettre à jour la liste locale
                 setValue('');                    
             }else { // en cas d'erreur, préparer une erreur générique
-                setError('Ooops, une erreur');
+                    setError('Ooops, une erreur');
                 }
         }catch(error){
                 console.error(`error : ${error}`);

@@ -26,10 +26,10 @@ function App() {
     const getTodos = async ()=> {
       try {
         setIsLoading(true)
-        const response = await fetch('https://www.restapi.fr/api/rtodo');
+        const response = await fetch('https://www.restapi.fr/api/todos');
           if(response.ok){
             const data = await response.json();
-            console.log(data);
+            console.log("Todo(s) récupéré(s) depuis l'API : ",data);
 
             if(!shouldCancel){
               if(Array.isArray(data)){ // vérifier si les données sont sous forme de tableau
@@ -65,49 +65,10 @@ function App() {
   const deleteTodo = (_id) => {
     setTodoList(todoList.filter(t => t._id !== _id));
   }
-  
-  // Méthode de changement d'état de todo
-  const toggleTodo = (_id) => {
-     const newTodoList = todoList.map( todo => {
-      
-      if(todo._id === _id){   
-        return {...todo, done: !todo.done};
-      }else {
-        return todo;
-      }  
-    }
-  )
-    setTodoList(newTodoList);
-  }
-
-  // Méthode de changement d'état du mode d'édition de todo
-  const toggleEditTodo = (_id) => {
-     const newTodoList = todoList.map( todo => {
-      if(todo._id === _id){   
-        return {...todo, editable: !todo.editable};
-      }else {
-        return todo;
-      }  
-    }
-  )
-    setTodoList(newTodoList);
-};
     
   // Méthode de mise à jour de todo
-  const updateTodo = (_id, content) => {
-    setTodoList(todoList.map(todo => todo.id === _id 
-                  ? 
-                  (
-                    {
-                      ...todo, 
-                      editable : false, // à chaque mise à jour de todo, basculer en mode lecture de todo
-                      content: content 
-                    }
-                  ) 
-                  : 
-                  todo
-                )
-              );
+  const updateTodo =(todo) => {
+    setTodoList(todoList.map(t => t._id === todo._id ? todo : t));
   }
 
   // Méthode pour changer de thème
@@ -128,8 +89,6 @@ function App() {
         <TodoList 
           todoList = { todoList } 
           deleteTodo = { deleteTodo } 
-          toggleTodo = { toggleTodo }
-          toggleEditTodo = { toggleEditTodo}
           updateTodo = { updateTodo }
           setTodoList = {setTodoList}
         />

@@ -1,8 +1,7 @@
-import { useEffect } from "react"
 import EditTodo from "./EditTodo"
 import TodoItem from "./TodoItem"
 
-export default function TodoList({todoList, deleteTodo, toggleTodo, toggleEditTodo, updateTodo}){
+export default function TodoList({todoList, deleteTodo, updateTodo}){
     // console.log(todoList);
 
     // Gérer le cas où il n'y a pas de todo
@@ -19,7 +18,6 @@ export default function TodoList({todoList, deleteTodo, toggleTodo, toggleEditTo
                         key={todo._id}
                         todo = {todo} 
                         updateTodo = { updateTodo}
-                        toggleEditTodo = {toggleEditTodo}
                     />
                     ) 
                     :
@@ -27,9 +25,7 @@ export default function TodoList({todoList, deleteTodo, toggleTodo, toggleEditTo
                                 key={ todo._id } 
                                 todo = { todo } 
                                 deleteTodo = { deleteTodo} 
-                                toggleTodo={ toggleTodo }
-                                toggleEditTodo = { toggleEditTodo }
-                                EditTodo = { () => toggleEditTodo(todo.id)}
+                                updateTodo={ updateTodo }
                     />)
                 ) }
             </ul>
