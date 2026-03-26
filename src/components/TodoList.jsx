@@ -1,8 +1,8 @@
 import EditTodo from "./EditTodo"
 import TodoItem from "./TodoItem"
 
-export default function TodoList({todoList, deleteTodo, updateTodo}){
-    // console.log(todoList);
+export default function TodoList({todoList, addTodo, updateTodo, deleteTodo}){
+    console.log('Les todos', todoList);
 
     // Gérer le cas où il n'y a pas de todo
     if(!todoList || todoList.length === 0){
@@ -17,15 +17,17 @@ export default function TodoList({todoList, deleteTodo, updateTodo}){
                     <EditTodo 
                         key={todo._id}
                         todo = {todo} 
-                        updateTodo = { updateTodo}
+                        addTodo = { addTodo}
+                        updateTodo={ updateTodo }
                     />
                     ) 
                     :
                     (<TodoItem 
-                                key={ todo._id } 
-                                todo = { todo } 
-                                deleteTodo = { deleteTodo} 
-                                updateTodo={ updateTodo }
+                        key={ todo._id } 
+                        todo = { todo } 
+                        addTodo={ addTodo }
+                        updateTodo={ updateTodo }
+                        deleteTodo= { deleteTodo }
                     />)
                 ) }
             </ul>

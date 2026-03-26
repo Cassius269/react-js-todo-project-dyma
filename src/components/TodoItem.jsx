@@ -36,8 +36,7 @@ export default function TodoItem({ todo, deleteTodo, updateTodo}) {
             if(response.ok){
                 const data = await response.json();
                 console.log(`Message reçu du serveur: ${data}`);
-                deleteTodo(todo._id); // supprimer la todo à l'aide de son ID de l'état local du composant parent (le composant racine <App /> ) 
-            }else {
+                deleteTodo(todo._id); // déclencher l'action de suppression de todo présent dans le reducer
                 console.log('Erreur');
             }
         }catch(error) {

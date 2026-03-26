@@ -4,16 +4,19 @@ import Footer from './components/Footer';
 import './assets/styles/App.scss';
 import AddTodo from './components/AddTodo';
 import TodoList from './components/TodoList';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { ThemeContext } from './context/ThemeContext';
 import Theme from './components/Theme';
+import todoReducer from './reducers/todoReducer';
 
 function App() {
   // Déclaration de l'état du thème
   const [theme, setTheme] = useState('green');
 
-  // Déclaration de l'état des todos
-  const [todoList, setTodoList] = useState([]); //  valeur initial tableau vide
+  // Déclaration du reducer 
+  const [state, dispatch] = useReducer(todoReducer, {
+    todoList: []
+    });
 
   // Déclaration de l'état du chargement des todos
   const [isLoading, setIsLoading] = useState(true);
@@ -32,11 +35,7 @@ function App() {
             console.log("Todo(s) récupéré(s) depuis l'API : ",data);
 
             if(!shouldCancel){
-              if(Array.isArray(data)){ // vérifier si les données sont sous forme de tableau
-                setTodoList(data);
-              }else { 
-                setTodoList([data]);
-              }
+                fetchTodos(data);
             }else {
               console.log('erreur');
             }
@@ -56,19 +55,35 @@ function App() {
     }
   }, []) // charger la liste des todos une seule fois après le premier rendu du composant <App />
 
+  // Méthode pour récuperer les todos et les mettre dans l'état local du composant racine
+  const fetchTodos = (todos) =>{
+    dispatch({
+      type: 'TODO_FETCH',
+      todos: todos
+    })
+  };
     // Méthode d'ajout de nouveau todo
-  const addTodo = (todo) => {
-    setTodoList([...todoList, todo]); // Récupérer les anciens todos, et rajouter la tâche récente
+  const addTodo = (newTodo) => {
+    dispatch({
+      type: 'TODO_CREATE',
+      todo: newTodo
+    })
   }
 
   // Méthode de suppression de todo
   const deleteTodo = (_id) => {
-    setTodoList(todoList.filter(t => t._id !== _id));
+    dispatch({
+      type: 'TODO_DELETE',
+      _id
+    })
   }
     
   // Méthode de mise à jour de todo
-  const updateTodo =(todo) => {
-    setTodoList(todoList.map(t => t._id === todo._id ? todo : t));
+  const updateTodo =(updatedTodo) => {
+    dispatch({
+      type: 'TODO_UPDATE',
+      todo: updatedTodo
+    })
   }
 
   // Méthode pour changer de thème
@@ -76,7 +91,7 @@ function App() {
     setTheme(t);
     console.log("theme",theme);
   }
-
+console.log('état local', state.todoList)
   return (
     <ThemeContext value={theme}>
 
@@ -87,10 +102,10 @@ function App() {
         <AddTodo addTodo={ addTodo } />
         {isLoading && <p>Chargement des todos en cours</p>}
         <TodoList 
-          todoList = { todoList } 
+          todoList = { state.todoList } 
           deleteTodo = { deleteTodo } 
           updateTodo = { updateTodo }
-          setTodoList = {setTodoList}
+          addTodo = { addTodo }
         />
       </main>
       <Footer />
