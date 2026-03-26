@@ -25,10 +25,10 @@ export default function AddTodo({addTodo}) {
         try{
             setIsLoading(true);
             const response = await fetch('https://www.restapi.fr/api/todos',{
-                method: 'POST', 
-                body : JSON.stringify(payload), // transformer la charge utile en json stringifié
-                headers: { 
-                    "Content-Type": "application/json"
+                    method: 'POST', 
+                    body : JSON.stringify(payload), // transformer la charge utile en json stringifié
+                    headers: { 
+                        "Content-Type": "application/json"
                 }
                 });
 

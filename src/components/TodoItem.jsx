@@ -5,56 +5,55 @@ export default function TodoItem({ todo, deleteTodo, updateTodo}) {
 
     const updateTodoFromApi = async (todoToUpdate) => {
         const  {_id, editable, ...payload} = todoToUpdate;
-            
-            try {
-                const response = await fetch(`https://www.restapi.fr/api/todos/${todo._id}`, {
-                    method: 'PATCH',
-                    body: JSON.stringify(payload),
-                    headers : {
-                        'Content-Type': 'application/json'
-                    }
+        
+        try {
+            const response = await fetch(`https://www.restapi.fr/api/todos/${todo._id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(payload),
+                headers : {
+                    'Content-Type': 'application/json'
+                }
                 });
 
                 if(response.ok){
                     const data = await response.json();
-
                     console.log(data);
+
+                    // modifier la todo dans l'état local des todos du composant racine <App />
+                    updateTodo({...todo, done: !todo.done});
                 }
             } catch (error) {
                 console.log('Erreur', error)
             }
         };
 
-    const handleClickDelete = () => {
-        const deleteTodoFromApi = async (id) => {
-            try{
-                const response = await fetch(`https://www.restapi.fr/api/todos/${id}`, {
-                    method: 'DELETE'
-                });
+    const deleteTodoFromApi = async (id) => {
+        try{
+            const response = await fetch(`https://www.restapi.fr/api/todos/${id}`, {
+                method: 'DELETE'
+            }); 
 
-                if(response.ok){
-                    const data = await response.json();
-                    console.log(`Message reçu du serveur: ${data}`);
-                }else {
-                    console.log('Erreur')
-                }
-            }catch(error) {
-                console.log('erreur', error)
+            if(response.ok){
+                const data = await response.json();
+                console.log(`Message reçu du serveur: ${data}`);
+                deleteTodo(todo._id); // supprimer la todo à l'aide de son ID de l'état local du composant parent (le composant racine <App /> ) 
+            }else {
+                console.log('Erreur');
             }
+        }catch(error) {
+                console.log('erreur', error);
+        }
         };
 
+    const handleClickDelete = () => {
         deleteTodoFromApi(todo._id);
-        deleteTodo(todo._id); // supprimer la todo de l'état local du composant parent (le composant racine <App /> )
     }
 
     const handleClickValidate = () => {
         // console.log('bouton valider cliqué');
-        updateTodo({...todo, done: !todo.done});
-                updateTodoFromApi({...todo, done: !todo.done});
-
+        updateTodoFromApi({...todo, done: !todo.done});
     }
 
- 
     const handleClickEdit = () => {
         // console.log('bouton editer cliqué');
         updateTodo({...todo, editable: true});
