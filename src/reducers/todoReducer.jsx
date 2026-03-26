@@ -6,8 +6,8 @@ function todoReducer(state, action){
                 // traitement à faire
                 ...state, 
                 todoList: Array.isArray(action.todos)
-                            ? [...state.todoList, ...action.todos]   // plusieurs todos à l'aide de la destructuration de tableau
-                            : [...state.todoList, action.todos]
+                            ? [...action.todos]   // plusieurs todos à l'aide de la destructuration de tableau
+                            : [action.todos]
             }
         case 'TODO_CREATE': 
             console.log('Créer un todo');
