@@ -1,10 +1,6 @@
-import { useContext } from "react";
-import { TodoDispatcherContext } from "../context/TodoContext";
+import { ThemeContext } from "../context/ThemeContext";
 
-export default function Theme(){
-
-    const dispatch = useContext(TodoDispatcherContext);
-
+export default function Theme({ changeTheme }){
     const handleSubmit = (e) => {
         e.preventDefault();
     }
@@ -12,18 +8,13 @@ export default function Theme(){
     const handleChange = (e) => {
         console.log(e.target)
         if(e.target.value === 'green'){
-           console.log('vert selectionné');
-           dispatch({
-            type: 'SET_THEME',
-            theme: e.target.value
-           })
+            console.log('vert selectionné');
+            changeTheme(e.target.value)
         }else if(e.target.value === 'red'){
             console.log('rouge selectionné');
-            dispatch({
-                type: 'SET_THEME',
-                theme: e.target.value
-           })        }
+            changeTheme(e.target.value)           
     }
+}
 
     return (
         <section className="d-flex justify-content-end ">
